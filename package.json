@@ -12,6 +12,6 @@
         "fs": "0.x"
     },
     "scripts": {
-        "start": "node /public/server.js"
+        "start": "node server.js"
     }
 }
