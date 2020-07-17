@@ -1,0 +1,13 @@
+{
+    "name": "note-taker",
+    "version": "1.0.0",
+    "description": "app for taking notes hosted on cloud service",
+    "main": "server.js",
+    "dependencies": {
+        "express": "^4.26.3",
+        "fs": "6.14.5",
+    },
+    "scripts": {
+        "start": "node /Develop/public/server.js",
+    }
+}
