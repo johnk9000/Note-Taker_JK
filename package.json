@@ -8,8 +8,9 @@
         "npm": "6.x"
     },
     "dependencies": {
-        "express": "^4.x",
-        "fs": "0.x"
+        "express": "^4.17.1",
+        "fs": "0.0.2",
+        "path": "^0.12.7"
     },
     "scripts": {
         "start": "node server.js"

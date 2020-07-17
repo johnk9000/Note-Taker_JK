@@ -17,20 +17,20 @@ console.log(__dirname);
 // DATA PIPE =======================================================
 let noteList = [];
 
-if(fs.readFileSync(__dirname + 'cache.txt', 'utf-8')) {
-    var cache = fs.readFileSync(__dirname + 'cache.txt', 'utf-8');
-    cache = JSON.stringify(cache);
-    noteList.push(cache)
-    console.log('initial READ \n' + noteList);
-}
+// if(fs.readFileSync(__dirname + 'public/cache.txt', 'utf-8')) {
+//     var cache = fs.readFileSync(__dirname + 'public/cache.txt', 'utf-8');
+//     cache = JSON.stringify(cache);
+//     noteList.push(cache)
+//     console.log('initial READ \n' + noteList);
+// }
 
 // ROUTE TABLE ========================================
 app.get("/", function(req, res) {
-        res.sendFile(path.join(__dirname, "index.html"));
+        res.sendFile(path.join(__dirname, "public/index.html"));
     });
     
 app.get("/notes", function(req, res) {
-    res.sendFile(path.join(__dirname, "notes.html"));
+    res.sendFile(path.join(__dirname, "public/notes.html"));
 });
 
 app.get("/api/notes", function(req, res) {  
