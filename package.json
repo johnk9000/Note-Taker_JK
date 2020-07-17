@@ -8,6 +8,6 @@
         "fs": "6.14.5"
     },
     "scripts": {
-        "start": "node /Develop/public/server.js",
+        "start": "node /Develop/public/server.js"
     }
 }
