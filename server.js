@@ -8,10 +8,10 @@ var PORT = process.env.PORT || 3600;
 // app config
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static("./assets/css"));
-app.use(express.static("./assets/js"));
-app.use(express.static("./"));
-app.use(express.static("./node_modules"));
+app.use(express.static(".public/assets/css"));
+app.use(express.static(".public/assets/js"));
+app.use(express.static("public"));
+app.use(express.static(".public/node_modules"));
 app.use(express.static("./db"));
 console.log(__dirname);
 // DATA PIPE =======================================================
@@ -23,16 +23,6 @@ if(fs.readFileSync(__dirname + 'cache.txt', 'utf-8')) {
     noteList.push(cache)
     console.log('initial READ \n' + noteList);
 }
-
-async function writeData() {
-    try{
-        if(noteList){
-            fs.readFileSync(__dirname, 'cache.txt')
-        }
-    } catch(err) {
-
-    }
-};
 
 // ROUTE TABLE ========================================
 app.get("/", function(req, res) {
