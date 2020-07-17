@@ -31,7 +31,7 @@ const saveNote = (note) => {
     data: note,
     method: "POST",
   }).then( function(res) {
-        console.log('writing to local store: \n' + JSON.stringify(res))
+        console.log('POSTING to notes from client: \n' + JSON.stringify(res))
         activeNote = res;
         var newNote = {
           id: 1,
@@ -47,7 +47,7 @@ const deleteNote = (id) => {
   return $.ajax({
     url: "api/notes/" + id,
     method: "DELETE",
-  });
+  })
 };
 
 // If there is an activeNote, display it, otherwise render empty inputs
@@ -85,6 +85,7 @@ const handleNoteSave = function () {
 
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => {
+  console.log('getting notes then rendering list...')
   return getNotes().then(renderNoteList);
 };
 
@@ -126,16 +127,19 @@ const renderNoteList = (notes) => {
 const handleNoteDelete = function (event) {
   // prevents the click listener for the list from being called when the button inside of it is clicked
   event.stopPropagation();
+  event.preventDefault();
 
-  const note = $(this).parent(".list-group-item").data();
-
+  var note = $(this).parent(".list-group-item").data();
+    console.log('deleting note...' + JSON.stringify(note))
   if (activeNote.id === note.id) {
     activeNote = {};
   }
-
+  $(this).parent(".list-group-item").addClass('hide');
   deleteNote(note.id).then(() => {
+    
     getAndRenderNotes();
     renderActiveNote();
+    location.reload();
   });
 };
 

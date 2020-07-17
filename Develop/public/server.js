@@ -4,7 +4,7 @@ var path = require("path");
 var fs = require("fs");
 // express config
 var app = express();
-var PORT = process.env.PORT || 4200;
+var PORT = process.env.PORT || 3600;
 // app config
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -16,6 +16,13 @@ app.use(express.static("./db"));
 console.log(__dirname);
 // DATA PIPE =======================================================
 let noteList = [];
+
+if(fs.readFileSync(__dirname + 'cache.txt', 'utf-8')) {
+    var cache = fs.readFileSync(__dirname + 'cache.txt', 'utf-8');
+    cache = JSON.stringify(cache);
+    noteList.push(cache)
+    console.log('initial READ \n' + noteList);
+}
 
 async function writeData() {
     try{
@@ -41,28 +48,26 @@ app.get("/api/notes", function(req, res) {
 });
 
 app.post("/api/notes", function(req, res) {
-    //localStorage.setItem('noteList', JSON.stringify(noteList))
-    console.log('posting note')    
     var note = req.body;
-        note.id = note.title.replace(/\s+/g, "").toLowerCase();
-        console.log('route post \n' + note);
+        note.id = note.title.replace(/\s+/g, "").toLowerCase(); 
         noteList.push(note);
-    fs.writeFileSync(__dirname + 'cache.txt', noteList);
-        res.json(noteList);
-    //let note = { id: 1, title: 'post title', cont: "post content"};
+            console.log('route POST \n' + noteList);
+        res.json(noteList);
 })
 
-app.delete('/api/notes/: id', function(req, res){
-
+app.delete('/api/notes/:id', function(req, res){
+    console.log('parameter ID ' + req.params.id);
+    let newList = [];
+    noteList.forEach(note => {
+        if( note.id !== req.params.id) {
+            newList.push(note);
+        }
+    })
+    noteList = newList;
+    console.log('filtered note-list' + JSON.stringify(noteList))
+    return req.params.id
 });
-// app.post("/api/notestash", function(req, res) {
 
-
-// retrieve note content
-// app.get("/api/notestash", function(req, res) {
-    // ** fs read & write modules here **
-    //     return res.json(notestash);
-    // });
 app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
 });
