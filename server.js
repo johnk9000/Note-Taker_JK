@@ -11,19 +11,32 @@ app.use(express.json());
 app.use(express.static(".public/assets/css"));
 app.use(express.static(".public/assets/js"));
 app.use(express.static("public"));
-app.use(express.static(".public/node_modules"));
+//app.use(express.static(".public/node_modules"));
 app.use(express.static("./db"));
 console.log(__dirname);
 // DATA PIPE =======================================================
 let noteList = [];
 
-// if(fs.readFileSync(__dirname + 'public/cache.txt', 'utf-8')) {
-//     var cache = fs.readFileSync(__dirname + 'public/cache.txt', 'utf-8');
-//     cache = JSON.stringify(cache);
-//     noteList.push(cache)
-//     console.log('initial READ \n' + noteList);
-// }
+var idList = [];
+while(idList.length < noteList.length + 10){
+    var r = Math.floor(Math.random() * 100) + 1;
+    if(idList.indexOf(r) === -1) arr.push(r);
+}
 
+app.get("/api/db", (req, res) => {
+    if (err) throw (err);
+        console.log('accessing DB...' + res)
+    res.send(noteList)
+})
+
+app.post("/api/db/", (req, res) => {
+    console.log('reading db...' + res);
+    var data = req.body
+    noteList.length = 0;
+    noteList.push(data)
+        console.log('loading to cache: \n' + noteList)
+    res.json(noteList)
+})
 // ROUTE TABLE ========================================
 app.get("/", function(req, res) {
         res.sendFile(path.join(__dirname, "public/index.html"));
@@ -58,6 +71,8 @@ app.delete('/api/notes/:id', function(req, res){
     return req.params.id
 });
 
+
+// INIT =================================================
 app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
 });
