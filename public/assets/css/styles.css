@@ -44,7 +44,6 @@ html, body {
   animation-name: blur;
   transition: ease-in;
   animation-duration: 120s;
-  
 }
 
 .note-title:hover {
@@ -88,6 +87,26 @@ html, body {
   cursor: pointer;
 }
 
+.list-group-item {
+  animation-name: blur;
+  transition: ease-in;
+  animation-duration: 240s;
+}
+
+/* .list-group-item {
+  overflow: hidden;
+  animation-name: popin;
+  transition: ease-in;
+  animation-duration: .5s;
+} */
+
+.list-group-item:hover {
+  animation: none;
+  filter: none;
+  transition: ease-out;
+  transition-duration: 10s;
+}
+
 #note-body {
   display: flex;
   flex: 100%;
@@ -96,6 +115,11 @@ html, body {
 }
 
 @keyframes blur {
-  from {filter: blur(0px)}
-  to {filter: blur(15px)}
+  from {filter: blur(0px); color: #333}
+  to {filter: blur(15px); color: #999}
+}
+
+@keyframes popin {
+  from {filter: blur(1px); width: 0%; height: 0%;}
+  to {filter: blur(0px); width: 100%; height: 100%}
 }

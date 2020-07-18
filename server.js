@@ -1,19 +1,18 @@
-// Dependencies =======================================================
+// Dependencies ====================================================
 var express = require("express");
 var path = require("path");
 var fs = require("fs");
-// express config
+// Express Config
 var app = express();
 var PORT = process.env.PORT || 3600;
-// app config
+// App Config
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(".public/assets/css"));
-app.use(express.static(".public/assets/js"));
+app.use(express.static(".public/assets/"));
 app.use(express.static("public"));
-//app.use(express.static(".public/node_modules"));
 app.use(express.static("./db"));
 console.log(__dirname);
+
 // DATA PIPE =======================================================
 let noteList = [];
 
@@ -40,10 +39,10 @@ app.post("/api/db/", (req, res) => {
         console.log('loading to cache: \n' + noteList)
     res.json(noteList)
 })
-// ROUTE TABLE ========================================
+// ROUTE TABLE =====================================================
 app.get("/", function(req, res) {
-        res.sendFile(path.join(__dirname, "public/index.html"));
-    });
+    res.sendFile(path.join(__dirname, "public/index.html"));
+});
     
 app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "public/notes.html"));
@@ -57,12 +56,12 @@ app.post("/api/notes", function(req, res) {
     var note = req.body;
         note.id = note.title.replace(/\s+/g, "").toLowerCase(); 
         noteList.push(note);
-            console.log('route POST \n' + noteList);
+            console.log('route POST \n' + noteList); // DEL
         res.json(noteList);
 })
 
 app.delete('/api/notes/:id', function(req, res){
-    console.log('parameter ID ' + req.params.id);
+        console.log('parameter ID ' + req.params.id); // DEL
     let newList = [];
     noteList.forEach(note => {
         if( note.id !== req.params.id) {
@@ -70,12 +69,11 @@ app.delete('/api/notes/:id', function(req, res){
         }
     })
     noteList = newList;
-    console.log('filtered note-list' + JSON.stringify(noteList))
+        console.log('filtered note-list' + JSON.stringify(noteList)) // DEL
     return req.params.id
 });
 
-
-// INIT =================================================
+// INIT ============================================================
 app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
 });
