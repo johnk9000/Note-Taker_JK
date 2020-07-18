@@ -19,8 +19,11 @@ let noteList = [];
 
 var idList = [];
 while(idList.length < noteList.length + 10){
+    console.log('ID: ' + idList)
     var r = Math.floor(Math.random() * 100) + 1;
-    if(idList.indexOf(r) === -1) arr.push(r);
+    if(idList.indexOf(r) === -1){
+        idList.push(r);
+    }
 }
 
 app.get("/api/db", (req, res) => {
